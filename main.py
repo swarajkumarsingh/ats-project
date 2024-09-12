@@ -10,50 +10,32 @@ sys.stdout = StringIO()
 st.set_page_config(page_title="Plus Gold ∙ ATS")
 
 def main():
-    st.title("Plus Gold | ATS Tracking System")
+    st.title("Plus Gold | ATS")
     st.markdown("---")
 
     st.subheader("Job Description and ATS Criteria")
     st.write("Please provide the job description and set the ATS criteria for filtering resumes.")
 
     description = st.text_area("Job Description:", key="input", height=150)
-    ats_criteria = st.number_input("Enter ATS Score Criteria (Percentage):", min_value=0, max_value=100, value=75, step=1)
+    ats_criteria = st.number_input("Enter ATS Score Criteria (difficulty level):", min_value=0, max_value=100, value=75, step=1)
 
     st.markdown("---")
-
     st.subheader("Upload Resumes")
-    upload_option = st.radio("Choose how to upload resumes:", ("Upload from Computer", "Provide Google Drive Link"), index=0)
-    
     st.write("")  
 
-    uploaded_files = []
-
-    if upload_option == "Upload from Computer":
-        uploaded_files = st.file_uploader("Upload your resumes (PDF)...", type=["pdf"], accept_multiple_files=True)
-        if uploaded_files:
-            st.success(f"{len(uploaded_files)} PDF(s) Uploaded Successfully.")
-    
-    elif upload_option == "Provide Google Drive Link":
-        google_drive_link = st.text_input("Enter Google Drive Link:")
-        if google_drive_link:
-            st.info("Fetching resumes from Google Drive...")
-            uploaded_files = utils.fetch_resumes_from_drive(google_drive_link)
-            st.success(f"{len(uploaded_files)} PDF(s) Fetched Successfully.")
-
-    st.markdown("---")
+    uploaded_files = st.file_uploader("Upload your resumes (PDF)...", type=["pdf"], accept_multiple_files=True)
+    if uploaded_files:
+        st.success(f"{len(uploaded_files)} PDF(s) Uploaded Successfully.")
 
     submit = st.button("Process Resumes")
-
+    st.markdown("---")
     if submit:
         if not description:
             st.error("Please provide a job description before processing resumes.")
         
         elif not uploaded_files:
-            if upload_option == "Upload from Computer":
-                st.error("Please upload at least one resume to proceed.")
-            else:
-                st.error("Please provide a valid Google Drive link to fetch resumes.")
-                
+            st.error("Please upload at least one resume to proceed.")
+
         proceed_resumes = []    
         for uploaded_file in uploaded_files:
             pdf_content = utils.pdf_to_text(uploaded_file)
@@ -97,13 +79,14 @@ def main():
         if len(proceed_resumes) != 0:
             for result in proceed_resumes: st.write(result["Name"], result["Score"])
 
-            csv_path = utils.get_csv(proceed_resumes)
+            # csv_path = utils.get_csv(proceed_resumes)
             # email_service.send_email_to(to_email="aniket@getplus.in", subject="ATS Passed Candidates",body_html=email_service.hr_body_html, attachment_path=csv_path)
 
-            for candidate in proceed_resumes:
-                pass
+            # for candidate in proceed_resumes:
+            #     pass
                 # email_service.send_email_to(to_email=candidate["Email"], subject="ATS Score Cleared!", body_html=email_service.candidate_email_body(candidate["Name"]))
             
+
             zip_buffer = utils.create_zip_file(proceed_resumes)
             current_date_str = utils.get_day_month_year()
             if zip_buffer: 
