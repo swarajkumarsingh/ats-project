@@ -23,7 +23,8 @@ def main():
     st.subheader("Upload Resumes")
     st.write("")  
 
-    uploaded_files = st.file_uploader("Upload your resumes (PDF)...", type=["pdf"], accept_multiple_files=True)
+    uploaded_files = st.file_uploader("Upload your resumes (PDF or DOCX)...", type=["pdf", "docx"], accept_multiple_files=True)
+
     if uploaded_files:
         st.success(f"{len(uploaded_files)} PDF(s) Uploaded Successfully.")
 
@@ -32,15 +33,16 @@ def main():
     if submit:
         if not description:
             st.error("Please provide a job description before processing resumes.")
-        
+
         elif not uploaded_files:
             st.error("Please upload at least one resume to proceed.")
 
         proceed_resumes = []    
         for uploaded_file in uploaded_files:
-            pdf_content = utils.pdf_to_text(uploaded_file)
+
+            pdf_content = utils.file_to_text(uploaded_file)
             if not pdf_content:
-                st.write(f"Rejected {uploaded_file.name}")
+                st.write(f"UnSupported Format {uploaded_file.name}")
                 continue
 
             prompt = utils.get_prompt(pdf_content, description)
@@ -50,34 +52,35 @@ def main():
                 st.write(f"Rejected {uploaded_file.name}, ats_score: {ats_score}")
                 continue
 
-            st.write(f'{uploaded_file.name}: Passed the ATS percentage criteria with {ats_score}%')
+            st.write(f'{uploaded_file.name}: Passed the ATS percentage criteria with {ats_score}')
 
-            candidate_details_raw = utils.get_candidate_info(pdf_content)
-            if candidate_details_raw == "":
-                st.write(f"Rejected {uploaded_file.name} with ats_score: {ats_score} because no name/email found")
-                continue
+            # candidate_details_raw = utils.get_candidate_info(pdf_content)
+            # if candidate_details_raw == "":
+            #     st.write(f"Rejected {uploaded_file.name} with ats_score: {ats_score} because no name/email found")
+            #     continue
             
-            name = utils.extract_info_details_name(candidate_details_raw)   
-            email = utils.extract_info_details_email(candidate_details_raw)   
-            phone = utils.extract_info_details_phone(candidate_details_raw)
+            # name = utils.extract_info_details_name(candidate_details_raw)   
+            # email = utils.extract_info_details_email(candidate_details_raw)   
+            # phone = utils.extract_info_details_phone(candidate_details_raw)
 
-            if not name or not email:
-                st.write(f"Rejected {uploaded_file.name} with ats_score: {ats_score} because no name/email found")
-                continue
+            # if not name or not email:
+            #     st.write(f"Rejected {uploaded_file.name} with ats_score: {ats_score} because no name/email found")
+            #     continue
 
-            name = utils.make_text_plain(name)
+            # name = utils.make_text_plain(name)
 
             proceed_resumes.append({
-                "Name": name,
-                "Email": email,
-                "Phone": phone,
+                "Name": uploaded_file.name,
+                # "Name": name,
+                # "Email": email,
+                # "Phone": phone,
                 "Score": ats_score,
                 "Resume": uploaded_file.name,
                 "ResumeFile": uploaded_file
             })
 
         if len(proceed_resumes) != 0:
-            for result in proceed_resumes: st.write(result["Name"], result["Score"])
+            # for result in proceed_resumes: st.write(result["Name"], result["Score"])
 
             # csv_path = utils.get_csv(proceed_resumes)
             # email_service.send_email_to(to_email="aniket@getplus.in", subject="ATS Passed Candidates",body_html=email_service.hr_body_html, attachment_path=csv_path)

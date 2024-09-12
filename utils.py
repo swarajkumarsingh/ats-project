@@ -10,6 +10,7 @@ import zipfile
 import pdfplumber
 import unicodedata
 import pandas as pd
+from docx import Document
 from datetime import datetime
 from io import BytesIO, StringIO
 import google.generativeai as genai
@@ -84,6 +85,25 @@ def pdf_to_text(pdf_path):
         return text
     except Exception as e:
         return text
+    
+def file_to_text(file):
+    pdf_content = None
+    if file.name.endswith(".pdf"):
+        pdf_content = pdf_to_text(file)
+    elif file.name.endswith(".docx"):
+        pdf_content = docx_to_text(file)
+    return pdf_content
+
+def docx_to_text(docx_path):
+    text = ''
+    try:
+        doc = Document(docx_path)
+        for para in doc.paragraphs:
+            text += para.text + '\n'
+        return text
+    except Exception as e:
+        print(f"Error reading DOCX {docx_path.name}: {e}")
+        return text
 
 def get_candidate_info(resume):
     try:
@@ -129,16 +149,6 @@ def get_ats_score(prompt, file_name, retries=10, delay=5):
             return 0
     print(f"Exceeded maximum retries for {file_name}. Returning 0.")
     return 0
-
-
-def fetch_resumes_from_drive(link):
-    # Dummy function to simulate fetching resumes from Google Drive
-    # You would replace this with actual code to fetch files using Google Drive API
-    # Here, it should return a list of file-like objects similar to those uploaded via st.file_uploader.
-    # Example:
-    # files = google_drive_api_fetch_files(link)
-    # return files
-    return []
 
 def get_day_month_year():
     return datetime.now().strftime("%d-%m-%Y")
