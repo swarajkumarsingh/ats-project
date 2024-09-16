@@ -1,6 +1,6 @@
-# 🎯 **ATS Application Workflow**
+# **ATS Application Workflow**
 
-## ✨ **Overview**
+## **Overview**
 This document details the automated workflow for processing candidate resumes through the ATS (Applicant Tracking System). The system is engineered to efficiently extract and evaluate candidate data, executing a series of sophisticated actions when the candidate's ATS score surpasses 75%.
 
 ---
@@ -9,7 +9,7 @@ This document details the automated workflow for processing candidate resumes th
 
 1. **Initial Scoring:**
    - The ATS application processes each candidate's resume.
-   - Calculate the candidate's ATS score based on the match between the resume and job description.
+   - Calculate the candidate's ATS score based on the match between the resume, job description and ats score.
 
 2. **Conditional Check:**
    - **If Candidate's ATS Score > 75%:**
@@ -33,3 +33,7 @@ This document details the automated workflow for processing candidate resumes th
 5. **Google Calendar Event:**
    - Set up a Google Calendar event for the candidate.
    - Send the event invitation to both the candidate and Aniket.
+
+
+6. **Download processed resumes button:**
+   - Download the list of passed candidates in zip format.
