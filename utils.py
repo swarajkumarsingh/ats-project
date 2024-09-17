@@ -15,6 +15,7 @@ from datetime import datetime
 from io import BytesIO, StringIO
 import google.generativeai as genai
 from google.api_core.exceptions import ResourceExhausted
+from openai import APIConnectionError, APIError, AuthenticationError, OpenAI, RateLimitError
 
 original_stdout = sys.stdout
 sys.stdout = StringIO()
@@ -184,3 +185,36 @@ def generate_random_string(length=16):
     characters = string.ascii_letters + string.digits
     random_string = ''.join(random.choice(characters) for _ in range(length))
     return random_string
+
+def chatgpt_model(prompt, model="gpt-3.5-turbo"):
+    response = None
+    try:
+        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model=model,
+        )
+
+        if chat_completion and chat_completion.choices and chat_completion.choices[0] and chat_completion.choices[0].message:
+            response = chat_completion.choices[0].message.content.strip()
+
+    except AuthenticationError:
+        print("Authentication failed: Please check your API key.")
+    except RateLimitError:
+        print("Rate limit exceeded: You have made too many requests in a short time.")
+    except APIConnectionError:
+        print("Network error: Could not connect to the OpenAI API.")
+    except APIError as e:
+        print(f"API error: {e}")
+    except ValueError as e:
+        print(f"Value error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+    return response

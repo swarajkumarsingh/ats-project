@@ -50,7 +50,7 @@ def process_resumes(description, ats_criteria, uploaded_files, min_experience, m
     for uploaded_file in uploaded_files:
         pdf_content = utils.file_to_text(uploaded_file)
         if not pdf_content:
-            st.write(f"Skipping UnSupported Format {uploaded_file.name}")
+            st.write(f"Rejected: {uploaded_file.name}")
             continue
 
         prompt = utils.get_prompt(pdf_content, description, min_experience, max_experience)
