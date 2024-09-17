@@ -17,6 +17,8 @@ def main():
     st.write("Please provide the job description and set the ATS criteria for filtering resumes.")
 
     description = st.text_area("Job Description:", key="input", height=150)
+    min_experience = st.number_input("Minimum Years of Experience:", min_value=0, max_value=50, value=1, step=1)
+    max_experience = st.number_input("Maximum Years of Experience:", min_value=0, max_value=50, value=3, step=1)
     ats_criteria = st.number_input("Enter ATS Score Criteria (difficulty level):", min_value=0, max_value=100, value=75, step=1)
 
     st.markdown("---")
@@ -37,13 +39,13 @@ def main():
         elif not uploaded_files:
             st.error("Please upload at least one resume to proceed.")
         else:
-            process_resumes(description, ats_criteria, uploaded_files)
+            process_resumes(description, ats_criteria, uploaded_files, min_experience, max_experience)
             
     with st.expander("Show Debug Logs"):
         captured_output = sys.stdout.getvalue()
         st.text_area("Debug Logs", captured_output, height=150)
 
-def process_resumes(description, ats_criteria, uploaded_files):
+def process_resumes(description, ats_criteria, uploaded_files, min_experience, max_experience):
     proceed_resumes = []
     for uploaded_file in uploaded_files:
         pdf_content = utils.file_to_text(uploaded_file)
@@ -51,7 +53,7 @@ def process_resumes(description, ats_criteria, uploaded_files):
             st.write(f"Skipping UnSupported Format {uploaded_file.name}")
             continue
 
-        prompt = utils.get_prompt(pdf_content, description)
+        prompt = utils.get_prompt(pdf_content, description, min_experience, max_experience)
         ats_score = utils.get_ats_score(prompt=prompt, file_name=uploaded_file.name)
 
         if ats_score < int(ats_criteria):

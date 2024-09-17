@@ -35,15 +35,16 @@ def get_model():
     genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
     return genai.GenerativeModel('gemini-1.5-flash')
 
-def get_prompt(text, description):
+def get_prompt(text, description, min_experience, max_experience):
     return f"""
     You are a skilled ATS (Applicant Tracking System) scanner with a deep understanding of ATS functionality. 
-    Evaluate the given resume against the provided job description and provide a match score. The output should be a single number representing the percentage match without the % symbol, based on the following criteria:
+    Evaluate the given resume against the provided job description and required experience range of {min_experience}-{max_experience} years, and provide a match score. The output should be a single number representing the percentage match without the % symbol, based on the following criteria:
 
     - If the resume is empty or not valid, return 0.
     - If the resume does not fit the job description at all (i.e., no relevant skills or experience), return 0.
     - If the resume partially matches the job description, calculate a percentage match based on the overlap of required skills, experience, and qualifications.
-    - If the resume fully matches the job description, return a percentage close to 100.
+    - **If the years of experience exceed {max_experience}, penalize the resume by giving it a much lower score, ensuring that over-qualified candidates do not pass.**
+    - If the resume fully matches the job description and falls within the required experience range, return a percentage close to 100.
 
     Provide only a single number as the output. Do not include any additional text or explanations.
 
