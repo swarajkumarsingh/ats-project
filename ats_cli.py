@@ -44,7 +44,6 @@ def get_description():
     Preferred:
     Experience with Agile development methodologies
     Knowledge of database testing and SQL
-
     """
 
 def get_pdf_path(resume_dir, resume_file):
@@ -83,14 +82,18 @@ def get_ats_percentage(prompt, retries=5, delay=5):
     return None
 
 def get_resume_dir():
-    return os.listdir(resume_dir)
+    try:
+        return os.listdir(resume_dir)
+    except Exception as e:
+        return None
 
 def main():
-    if len(get_resume_dir()) == 0:
+    resume_files = get_resume_dir()
+    if not resume_files or len(resume_files) == 0:
         print("No resumes found :(")
         return
 
-    for resume_file in get_resume_dir():
+    for resume_file in resume_files:
         if resume_file.lower().endswith('.pdf'):
             pdf_path = get_pdf_path(resume_dir, resume_file)
             print(f'Processing {pdf_path}...')
