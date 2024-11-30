@@ -92,14 +92,14 @@ hr_body_html = '''
             <h1>ATS Score Results</h1>
         </div>
         <div class="content">
-            <p>Dear PlusGold and Team,</p>
+            <p>Dear Company and Team,</p>
             <p>We are pleased to inform you that the candidates who have passed the ATS score are included in the attached CSV file.</p>
             <p>For any further details or questions, please do not hesitate to reach out.</p>
             <p>Best regards,</p>
-            <p>PlusGold</p>
+            <p>Company</p>
         </div>
         <div class="footer">
-            <p>&copy; 2024 PlusGold. All rights reserved.</p>
+            <p>&copy; 2024 Company. All rights reserved.</p>
         </div>
     </div>
 </body>
@@ -126,10 +126,10 @@ def candidate_email_body(candidate_name):
             <p style="font-size: 16px; line-height: 1.5;">Congratulations on successfully clearing the ATS process!</p>
             <p style="font-size: 16px; line-height: 1.5;">We appreciate your efforts and look forward to the next steps.</p>
             <p style="font-size: 16px; line-height: 1.5;">Best regards,</p>
-            <p style="font-size: 16px; line-height: 1.5;">PlusGold</p>
+            <p style="font-size: 16px; line-height: 1.5;">Company</p>
         </div>
         <div style="background-color: #f4f4f4; padding: 10px; text-align: center;">
-            <p style="margin: 0;">&copy; 2024 PlusGold. All rights reserved.</p>
+            <p style="margin: 0;">&copy; 2024 Company. All rights reserved.</p>
         </div>
     </div>
 </body>

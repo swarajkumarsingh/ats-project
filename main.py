@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 sys.stdout = StringIO() 
-st.set_page_config(page_title="Plus Gold ∙ ATS")
+st.set_page_config(page_title="HR ∙ ATS")
 
 def main():
-    st.title("Plus Gold | ATS")
+    st.title("HR | ATS")
     st.markdown("---")
 
     st.subheader("Job Description and ATS Criteria")
@@ -122,7 +122,7 @@ def process_and_email_resumes(description, ats_criteria, uploaded_files, min_exp
 
     if len(proceed_resumes) != 0:
         csv_path = utils.get_csv(proceed_resumes)
-        email_service.send_email_to(to_email="aniket@getplus.in", subject="ATS Passed Candidates",body_html=email_service.hr_body_html, attachment_path=csv_path)
+        email_service.send_email_to(to_email="hr@company.in", subject="ATS Passed Candidates",body_html=email_service.hr_body_html, attachment_path=csv_path)
 
         for candidate in proceed_resumes:
             pass
