@@ -3,7 +3,7 @@
 
 Welcome to the **Advanced ATS System**, a personal project designed to streamline the resume screening process. This tool evaluates resumes against predefined job descriptions and ATS criteria, offering an intuitive and feature-rich interface for recruiters. Also supports both Gemeini & ChatGPT for it's calculations and saves the scheduled interview to google calender
 
-## 🌟 Features
+## Features
 
 ### 1. **Job Description and Criteria Input**
    - **Text Area for Job Descriptions**: Input detailed job descriptions to define the requirements for the position.
@@ -59,7 +59,7 @@ Welcome to the **Advanced ATS System**, a personal project designed to streamlin
 
 ---
 
-## 🚀 How to Use
+## How to Use
 
 1. **Set Job Criteria**:  
    - Enter the job description, minimum and maximum experience, and ATS score criteria.
@@ -75,7 +75,7 @@ Welcome to the **Advanced ATS System**, a personal project designed to streamlin
 
 ---
 
-## 🛠️ Project Structure
+## Project Structure
 
 ```
 project/
@@ -89,7 +89,7 @@ project/
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
 Make sure you have the following libraries installed:
 
@@ -107,7 +107,7 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 1. Create a `.env` file with the following variables:
    ```
@@ -126,7 +126,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Run the Application
+## Run the Application
 
 Start the application using Streamlit:
 
@@ -138,7 +138,7 @@ Visit the app in your browser at `http://localhost:8501`.
 
 ---
 
-## 📈 Future Enhancements
+## Future Enhancements
 
 - **AI-Based Resume Scoring**: Use ML models to improve the scoring process.
 - **Integration with Job Boards**: Automate resume collection directly from platforms like LinkedIn or Naukri.
@@ -186,11 +186,11 @@ This document details the automated workflow for processing candidate resumes th
 6. **Download processed resumes button:**
    - Download the list of passed candidates in zip format.
 
-### 🔗 Contact
+### Contact
 
 For queries, suggestions, or contributions, feel free to reach out:
 
-- **Email**: ats.system@example.com
+- **Email**: sswaraj169@gmail.com
 - **Linkedin**: https://in.linkedin.com/in/swarajkumarsingh
 
-### Happy Recruiting! 🎯
+### Happy Recruiting!
