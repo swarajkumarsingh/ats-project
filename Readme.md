@@ -3,6 +3,10 @@
 
 Welcome to the **Advanced ATS System**, a personal project designed to streamline the resume screening process. This tool evaluates resumes against predefined job descriptions and ATS criteria, offering an intuitive and feature-rich interface for recruiters. Also supports both Gemeini & ChatGPT for it's calculations and saves the scheduled interview to google calender
 
+![ats](https://github.com/user-attachments/assets/85b094e1-1dd6-4773-a117-7e317adcd761)
+![ATS SS 2](https://github.com/user-attachments/assets/664e9086-6ea6-4844-b67b-5de468b162b9)
+
+
 ## Features
 
 ### 1. **Job Description and Criteria Input**
